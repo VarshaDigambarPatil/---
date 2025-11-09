@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #3a6186, #89253e);
+}
+
+.container {
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  width: 300px;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.calculator {
+  display: flex;
+  flex-direction: column;
+}
+
+#display {
+  height: 50px;
+  border: none;
+  background: #f4f4f4;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.btn {
+  background: #3a6186;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #2f4d6c;
+}
+
+.zero {
+  grid-column: span 2;
+}
+
+.equal {
+  background: #89253e;
+}
+
+.equal:hover {
+  background: #701f33;
+}
+
+.demo {
+  margin-top: 15px;
+}
+
+.demo-btn {
+  text-decoration: none;
+  color: white;
+  background: #3a6186;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.demo-btn:hover {
+  background: #2f4d6c;
+}

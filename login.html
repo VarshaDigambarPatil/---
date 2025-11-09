@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Authentication System</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+      width: 350px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #43a047;
+    }
+
+    p {
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .secure-page {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+
+    .btn-demo {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn-demo:hover {
+      background-color: #388e3c;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Registration Page -->
+  <div class="container" id="registerPage">
+    <h1>Register</h1>
+    <input type="text" id="regUsername" placeholder="Username" required>
+    <input type="password" id="regPassword" placeholder="Password" required>
+    <button onclick="register()">Register</button>
+    <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+  </div>
+
+  <!-- Login Page -->
+  <div class="container hidden" id="loginPage">
+    <h1>Login</h1>
+    <input type="text" id="loginUsername" placeholder="Username" required>
+    <input type="password" id="loginPassword" placeholder="Password" required>
+    <button onclick="login()">Login</button>
+    <p>Don’t have an account? <a href="#" onclick="showRegister()">Register</a></p>
+  </div>
+
+  <!-- Secured Page -->
+  <div class="secure-page hidden" id="securePage">
+    <h1>Welcome, <span id="userDisplay"></span> 👋</h1>
+    <p>You have successfully logged in to the secured page.</p>
+    <button onclick="logout()">Logout</button>
+    <br><br>
+    <a href="#" class="btn-demo">For more details Click Here</a>
+  </div>
+
+  <script>
+    const registerPage = document.getElementById("registerPage");
+    const loginPage = document.getElementById("loginPage");
+    const securePage = document.getElementById("securePage");
+    const userDisplay = document.getElementById("userDisplay");
+
+    function showLogin() {
+      registerPage.classList.add("hidden");
+      loginPage.classList.remove("hidden");
+    }
+
+    function showRegister() {
+      loginPage.classList.add("hidden");
+      registerPage.classList.remove("hidden");
+    }
+
+    function register() {
+      const username = document.getElementById("regUsername").value;
+      const password = document.getElementById("regPassword").value;
+
+      if (username && password) {
+        localStorage.setItem("user", JSON.stringify({ username, password }));
+        alert("Registration successful! Please login.");
+        showLogin();
+      } else {
+        alert("Please fill all fields!");
+      }
+    }
+
+    function login() {
+      const username = document.getElementById("loginUsername").value;
+      const password = document.getElementById("loginPassword").value;
+
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+
+      if (!storedUser) {
+        alert("No user found! Please register first.");
+        return;
+      }
+
+      if (username === storedUser.username && password === storedUser.password) {
+        userDisplay.textContent = username;
+        loginPage.classList.add("hidden");
+        securePage.classList.remove("hidden");
+      } else {
+        alert("Invalid username or password!");
+      }
+    }
+
+    function logout() {
+      securePage.classList.add("hidden");
+      loginPage.classList.remove("hidden");
+    }
+  </script>
+
+</body>
+</html>

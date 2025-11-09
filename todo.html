@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic To-Do Web App</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(120deg, #e3f2fd, #bbdefb);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 10px;
+    }
+
+    .container {
+      background: #fff;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      padding: 20px 30px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #1565c0;
+      margin-bottom: 20px;
+    }
+
+    .input-section {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .input-section input {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid #90caf9;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .input-section button {
+      padding: 10px 15px;
+      border: none;
+      background-color: #1565c0;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .input-section button:hover {
+      background-color: #0d47a1;
+    }
+
+    .task-list {
+      margin-bottom: 25px;
+    }
+
+    h2 {
+      color: #0d47a1;
+      border-bottom: 2px solid #0d47a1;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      background: #f1f8e9;
+      margin-bottom: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1rem;
+    }
+
+    li.completed {
+      background: #dcedc8;
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .actions button {
+      border: none;
+      padding: 6px 10px;
+      border-radius: 5px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    .complete-btn { background-color: #43a047; color: white; }
+    .delete-btn { background-color: #e53935; color: white; }
+    .edit-btn { background-color: #ffb300; color: white; }
+
+    .time {
+      font-size: 0.8rem;
+      color: #666;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .btn-demo {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #1565c0;
+      color: #fff;
+      border-radius: 5px;
+      text-decoration: none;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .btn-demo:hover {
+      background-color: #0d47a1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>📝 My To-Do List</h1>
+
+    <div class="input-section">
+      <input type="text" id="taskInput" placeholder="Enter new task...">
+      <button onclick="addTask()">Add</button>
+    </div>
+
+    <div class="task-list">
+      <h2>Pending Tasks</h2>
+      <ul id="pendingList"></ul>
+    </div>
+
+    <div class="task-list">
+      <h2>Completed Tasks</h2>
+      <ul id="completedList"></ul>
+    </div>
+  </div>
+
+  <script>
+    const pendingList = document.getElementById("pendingList");
+    const completedList = document.getElementById("completedList");
+    const taskInput = document.getElementById("taskInput");
+
+    function getCurrentTime() {
+      const now = new Date();
+      return now.toLocaleString();
+    }
+
+    function addTask() {
+      const taskText = taskInput.value.trim();
+      if (taskText === "") return alert("Please enter a task!");
+
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <div>
+          <span>${taskText}</span>
+          <span class="time">Added on: ${getCurrentTime()}</span>
+        </div>
+        <div class="actions">
+          <button class="complete-btn" onclick="completeTask(this)">✔</button>
+          <button class="edit-btn" onclick="editTask(this)">✏</button>
+          <button class="delete-btn" onclick="deleteTask(this)">🗑</button>
+        </div>
+      `;
+
+      pendingList.appendChild(li);
+      taskInput.value = "";
+    }
+
+    function completeTask(button) {
+      const li = button.closest("li");
+      li.classList.add("completed");
+      li.querySelector(".time").textContent = "Completed on: " + getCurrentTime();
+
+      li.querySelector(".complete-btn").remove();
+      completedList.appendChild(li);
+    }
+
+    function deleteTask(button) {
+      button.closest("li").remove();
+    }
+
+    function editTask(button) {
+      const li = button.closest("li");
+      const span = li.querySelector("span");
+      const newText = prompt("Edit your task:", span.textContent);
+      if (newText) span.textContent = newText;
+    }
+  </script>
+
+</body>
+</html>
